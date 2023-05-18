@@ -1,0 +1,28 @@
+--Create a clothing store database
+
+CREATE TABLE clothing_store (id INTEGER PRIMARY KEY, item TEXT, category TEXT, inventory INTEGER, price INTEGER);
+
+INSERT INTO clothing_store VALUES 
+(1, "crop top", "top", 1, 14), 
+(2, "a-line dress", "dress", 4, 16), 
+(3, "jeans", "bottoms", 2, 17),
+(4, "slacks", "bottoms", 13, 13),
+(5, "blouse", "top", 7, 14),
+(6, "skirt", "bottoms", 13, 13),
+(7, "tank top", "top", 2, 10),
+(8, "belt", "accessories", 14, 6),
+(9, "necklace", "accessories", 12, 3),
+(10, "earrings", "accessories", 6, 4),
+(11, "bracelet", "accessories", 6, 4),
+(12, "T-shirt", "top", 16, 8), 
+(13, "socks", "accessories", 16, 3),
+(14, "skort", "bottoms", 6, 11),
+(15, "leggings", "bottoms", 7, 8); 
+
+--display the database ordered by price.
+SELECT* FROM clothing_store
+
+--organize items priced greater than 10 in order by price. 
+SELECT category, price FROM clothing_store WHERE price >=10 ORDER BY price; 
+
+
