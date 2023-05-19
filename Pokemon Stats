@@ -136,10 +136,7 @@ SELECT type_1, MIN(attack), MAX(attack) FROM pokemon GROUP BY Type_1 ORDER BY Mi
 --How many pokemon only are earth types (Bug, Grass, and Rock)? 
 
 SELECT Type_1 as Earth_Types, Count(Type_1) AS Total FROM pokemon 
-WHERE 
-    type_1="Bug" 
-    OR type_1="Grass" 
-    OR Type_1="Rock" 
+WHERE type_1 IN ("Bug", "Grass", "Rock")
 GROUP BY Type_1; 
 
 --How many pokemon are at each power level? What is the average attack of each power level? 
@@ -155,3 +152,7 @@ FROM pokemon
 WHERE type_2 is NULL
 GROUP BY power_level;
 
+--How many pokemon have "-saur" in the name? 
+
+SELECT COUNT(name) as SAUR FROM pokemon
+WHERE name LIKE "%saur%"; 
