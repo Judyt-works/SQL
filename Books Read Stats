@@ -3,7 +3,8 @@ CREATE TABLE authors (id INTEGER PRIMARY KEY AUTOINCREMENT, fullname TEXT, bookt
     INSERT INTO authors (fullname, booktitle, yearpub) VALUES ("Michelle Zauner", "Crying in H Mart", 2021);
     INSERT INTO authors (fullname, booktitle, yearpub) VALUES ("Viola Davis", "Finding Me", 2022);
     INSERT INTO authors (fullname, booktitle, yearpub) VALUES ("Michelle Obama", "Becoming", 2018);
-    INSERT INTO authors (fullname, booktitle, yearpub) VALUES ("Neil Gaiman", "Nevermore", 1996); 
+    INSERT INTO authors (fullname, booktitle, yearpub) VALUES ("Neil Gaiman", "Nevermore", 1996);
+    INSERT INTO authors (fullname, booktitle, yearpub) VALUES ("Jeff Henderson", "Cooked", 2007);
     
 
 CREATE TABLE birthinfo (author_id INTEGER PRIMARY KEY AUTOINCREMENT, city TEXT, country TEXT, year NUMERIC);
@@ -11,12 +12,13 @@ CREATE TABLE birthinfo (author_id INTEGER PRIMARY KEY AUTOINCREMENT, city TEXT, 
     INSERT INTO birthinfo (city, country, year) VALUES ("Seoul", "Korea", 1989);
     INSERT INTO birthinfo (city, country, year) VALUES ("St Matthews", "US", 1965);
     INSERT INTO birthinfo (city, country, year) VALUES ("Chicago", "US", 1964);
-    INSERT INTO birthinfo (city, country, year) VALUES ("Portchester", "UK", 1960); 
+    INSERT INTO birthinfo (city, country, year) VALUES ("Portchester", "UK", 1960);
+    INSERT INTO birthinfo (city, country, year) VALUES ("Los Angeles", "US", 1964);
     
 CREATE TABLE interview_pairs (id INTEGER PRIMARY KEY AUTOINCREMENT, author1_id INTEGER, author2_id INTEGER);
     INSERT INTO interview_pairs (author1_id, author2_id) VALUES (1,3);
     INSERT INTO interview_pairs (author1_id, author2_id) VALUES (2,4);
-    INSERT INTO interview_pairs (author1_id, author2_id) VALUES (5,3);
+    INSERT INTO interview_pairs (author1_id, author2_id) VALUES (5,6);
     
 
 -- Combine all the information into one coherent table
@@ -49,4 +51,3 @@ SELECT fullname AS "Full Name", booktitle AS "Book Title", yearpub AS "Year Publ
 FROM authors
 JOIN birthinfo
     ON authors.id = birthinfo.author_id; 
-    
