@@ -1,5 +1,24 @@
 --In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
 
+SELECT * FROM  BIT_DB.customers LIMIT 20;
+-- What columns are in customers? order_id and acctnum
+
+SELECT * FROM BIT_DB.JanSales LIMIT 20;
+--What columns are in January Sales? orderID, Product, Quantity, price, orderdate, and location
+--Customers and JanSales have orderiD in common. 
+
+-- Messy Data
+SELECT * FROM BIT_DB.customers; 
+--... means the rows contain more data than what's being displayed in other rows
+--Order ID
+
+--How to fix messy data
+--filter it out
+SELECT * FROM BIT_DB.customers WHERE length(order_id)=6 AND order_id <> 'Order ID';
+SELECT COUNT(order_id) FROM BIT_DB.customers WHERE length(order_id)=6 AND order_id <> 'Order ID';
+--IS NOT NULL 
+-- orderid = <> '' 
+
 --1. How many orders were placed in January? 9681
 SELECT COUNT(orderID)
 FROM BIT_DB.JanSales 
@@ -48,3 +67,31 @@ ON FEB.orderid=cust.order_id
 WHERE Feb.Quantity > 2
 AND length(orderid) = 6 
 AND orderid <> 'Order ID'
+
+
+--Data Filtering Techniques
+
+SELECT orderdate
+FROM BIT_DB.FebSales
+WHERE orderdate between '02/13/19 00:00' AND '02/18/19 00:00'; 
+
+SELECT location
+FROM BIT_DB.FebSales
+WHERE orderdate = '02/18/19 01:35';
+
+SELECT sum(quantity)
+FROM BIT_DB.FebSales
+WHERE orderdate LIKE '02/18/19%'; 
+
+SELECT distinct Product
+FROM BIT_DB.FebSales
+WHERE Product LIKE '%Batteries%';
+
+Select distinct Product, Price
+FROM BIT_DB.FebSales
+WHERE Price LIKE '%.99'; 
+
+SELECT product, sum(quantity)
+FROM BIT_DB.FebSales
+WHERE location LIKE '%Los Angeles%'
+GROUP BY product; 
