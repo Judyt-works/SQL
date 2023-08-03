@@ -1,0 +1,90 @@
+SELECT * FROM listings;
+SELECT * FROM reviews; 
+
+--Which listings have the most reviews? 
+SELECT listing_id, COUNT(review_id) FROM reviews
+GROUP BY listing_id
+ORDER BY COUNT(review_ID) desc;
+
+--Where are the top 5 reviewed listings located? 
+SELECT l.city, COUNT(r.review_id)
+FROM reviews r
+JOIN listings l
+ON r.listing_ID=l.listing_ID
+GROUP BY l.city
+ORDER BY COUNT(r.review_ID) desc LIMIT 5;
+
+--When quarter of the year are reviews usually posted? 
+SELECT COUNT(review_id),
+    CASE
+        WHEN strftime('%m', date) BETWEEN '01' AND '03' THEN 'Q1 '
+        WHEN strftime('%m', date) BETWEEN '04' AND '06' THEN 'Q2 ' 
+        WHEN strftime('%m', date) BETWEEN '07' AND '09' THEN 'Q3 '
+        WHEN strftime('%m', date) BETWEEN '10' AND '12' THEN 'Q4 ' 
+       END AS quarter    
+FROM reviews
+GROUP BY quarter
+ORDER BY Count(review_id) desc;
+
+--Which cities do the reviews for Q4 correlate with? 
+SELECT l.city, COUNT(r.review_id),
+CASE
+        WHEN strftime('%m', date) BETWEEN '01' AND '03' THEN 'Q1 '
+        WHEN strftime('%m', date) BETWEEN '04' AND '06' THEN 'Q2 ' 
+        WHEN strftime('%m', date) BETWEEN '07' AND '09' THEN 'Q3 '
+        WHEN strftime('%m', date) BETWEEN '10' AND '12' THEN 'Q4 ' 
+       END AS quarter   
+FROM reviews r
+JOIN listings l
+ON r.listing_ID=l.listing_ID
+GROUP BY l.city
+HAVING quarter = 'Q4 '
+ORDER BY COUNT(r.review_ID) desc;
+
+--Which cities are the majority of airbnbs located? 
+SELECT city, COUNT(listing_ID)as totallistings FROM listings
+GROUP BY city
+ORDER BY COUNT(listing_ID) desc; 
+
+
+--Which cities have the highest overall scores based on room type? 
+SELECT DISTINCT city, room_type, ROUND(AVG(review_scores_rating),0) as avgscore, ROUND(AVG(review_scores_accuracy),0) as avgsaccur, ROUND(AVG(review_scores_cleanliness),1) as avgscoreclean, ROUND(AVG(review_scores_checkin),1) as avgscorecheckin, ROUND(AVG(review_scores_communication),1) as avgscorecommun, ROUND(AVG(review_scores_location),1) as avgscoreloca, ROUND(AVG(review_scores_value),1) as avgscorevalue  
+FROM listings
+GROUP BY city, room_type
+ORDER BY avgscore desc;
+
+--Which cities have the highest overall scores?
+SELECT DISTINCT city, ROUND(AVG(review_scores_rating),0) as avgscore, ROUND(AVG(review_scores_accuracy),0) as avgsaccur, ROUND(AVG(review_scores_cleanliness),1) as avgscoreclean, ROUND(AVG(review_scores_checkin),1) as avgscorecheckin, ROUND(AVG(review_scores_communication),1) as avgscorecommun, ROUND(AVG(review_scores_location),1) as avgscoreloca, ROUND(AVG(review_scores_value),1) as avgscorevalue  
+FROM listings
+GROUP BY city
+ORDER BY avgscore desc;
+
+--Which room type has the lowest score? 
+SELECT DISTINCT room_type, ROUND(AVG(review_scores_rating),0) as avgscore
+FROM listings
+GROUP BY room_type
+ORDER BY avgscore asc LIMIT 1;
+
+-------------------------
+
+--How many Airbnbs overalll does Mexico City have? And Istanbul? 
+SELECT city, COUNT(listing_ID)as totallistings FROM listings
+GROUP BY city
+HAVING city ='Mexico City' OR city='Istanbul';
+
+--How many of each room type does Mexico City have? And Istanbul? 
+SELECT city, room_type, COUNT(listing_ID)as totallistings FROM listings
+GROUP BY city, room_type
+HAVING city ='Mexico City' OR city='Istanbul'; 
+
+
+
+---------------------
+
+--What is the average price of each room type for each city? 
+SELECT DISTINCT city, room_type, ROUND(AVG(price),2) as avgprice  FROM listings
+GROUP BY city, room_type;
+--Which room type provides the most revenue? 
+SELECT DISTINCT room_type, ROUND(AVG(price),2) as avgprice  FROM listings
+GROUP BY room_type
+ORDER BY avgprice desc;
